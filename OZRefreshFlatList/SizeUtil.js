@@ -36,9 +36,9 @@ export default class SizeUtil {
     
     static screenH = (hasTab, hasNav) => {
         if (SizeUtil.isIPhoneX()) {
-            return screenHeight - hasTab ? 83 : 0 - hasNav ? 88 : 44;
+            return screenHeight - (hasTab ? 83 : 0) - (hasNav ? 88 : 44);
         } else {
-            return screenHeight - hasTab ? 49 : 0 - hasNav ? 64 : 20;
+            return screenHeight - (hasTab ? 49 : 0) - (hasNav ? 64 : 20);
         }
     }
 }

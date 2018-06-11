@@ -20,7 +20,8 @@ export const FlatListState = {
 
 export default class OZRefreshFlatList extends Component {
     static propTypes = {
-        refreshing: PropTypes.bool,
+        refreshing:PropTypes.bool,
+        loadMore: PropTypes.bool,
         refreshState: PropTypes.number,
         onEndReached: PropTypes.func,
         onRefresh: PropTypes.func
@@ -77,12 +78,12 @@ export default class OZRefreshFlatList extends Component {
                 onRefresh={() => this.onRefresh()}
                 onEndReached={() => this.onEndReached()}
                 refreshing={this.props.refreshing}
-                onEndReachedThreshold={this.props.onEndReachedThreshold || 0.05}
+                onEndReachedThreshold={this.props.onEndReachedThreshold || 0.1}
                 ItemSeparatorComponent={() => separatorComponent}
                 keyExtractor={(item, index) => index.toString()}
                 ListEmptyComponent={() => <View
                     style={{
-                        height: SizeUtil.screenH(),
+                        height: SizeUtil.screenH(true, true),
                         width: SizeUtil.screenW(),
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -119,16 +120,17 @@ export default class OZRefreshFlatList extends Component {
     }
     
     onRefresh = () => {
-        //如果refreshing是boolean类型的，表示只有下拉刷新
-        //如果refreshing是number类型的，并且值不等于LoadMore和Refreshing
-        if (!this.props.refreshing && (this.props.refreshState == FlatListState.Refreshing || this.props.refreshState == FlatListState.Both)) {
-            this.refreshTimer = setTimeout(() => {
-                this.props.onRefresh && this.props.onRefresh();
-            }, delayTime);
+        if (this.props.refreshState === FlatListState.Refreshing || this.props.refreshState === FlatListState.Both) {
+            if (!this.props.refreshing) {
+                this.refreshTimer = setTimeout(() => {
+                    this.props.onRefresh && this.props.onRefresh();
+                }, delayTime);
+            }
         }
     }
     
     onEndReached = () => {
+        console.log('onEndReached');
         if (this.props.refreshState === FlatListState.Refreshing ||
             this.props.refreshState === FlatListState.NoRefresh) {
             return;
@@ -151,6 +153,7 @@ export default class OZRefreshFlatList extends Component {
             if ((this.props.length % this.props.pageSize !== 0) || (this.props.length / (this.props.page - 1) === this.props.pageSize)) {
                 //length长度和pageSize的余数不为0 例如： pageSize为10，一共有22个数据，页数为3，多了2个数据
                 //length长度除以page页数-1等于pageSize 例如 30个数据，4页，第四页获取的数据是0，3页
+                console.log('no more data');
                 this.setState({
                     noMoreData: true,
                     empty: false,
@@ -159,6 +162,7 @@ export default class OZRefreshFlatList extends Component {
             }
         } else {
             //length 为0
+            console.log('empty');
             this.setState({
                 empty: true,
                 noMoreData: false,
@@ -167,9 +171,11 @@ export default class OZRefreshFlatList extends Component {
         }
         
         //通过其他判断，现在判断refreshing状态
-        //refreshing等于IDLE，触发上拉加载更多
+        //refreshing等于Both，触发上拉加载更多
+        console.log(this.props.refreshing);
         if (!this.props.refreshing && this.props.refreshState === FlatListState.Both) {
             this.loadMoreTimer = setTimeout(() => {
+                console.log('this.props.onEndReached');
                 this.props.onEndReached && this.props.onEndReached();
             }, delayTime);
         }
