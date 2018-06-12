@@ -14,8 +14,12 @@ import {
 import {
     createStackNavigator,
 } from 'react-navigation';
-import OZRefreshFlatList, {FlatListState} from "./OZRefreshFlatList";
-import SizeUtil from "./SizeUtil";
+// import SizeUtil from "./SizeUtil";
+import {
+    OZRefreshFlatList,
+    FlatListState,
+    SizeUtil,
+} from 'react-native-oz-libs';
 
 const defaultPage = 1;
 
