@@ -115,15 +115,10 @@ export default AppStack;
 
 const styles = StyleSheet.create({
     container: {
-        // width: SizeUtil.screenW(),
-        // height: SizeUtil.screenH(false, true),
         flex: 1,
-        // backgroundColor: 'red',
     },
     list: {
-        // margin: 10,
         height: SizeUtil.screenH(false, true),
-        // backgroundColor: 'blue',
     }
 });
 
