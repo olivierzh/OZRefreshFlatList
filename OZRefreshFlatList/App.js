@@ -14,16 +14,13 @@ import {
 import {
     createStackNavigator,
 } from 'react-navigation';
-// import SizeUtil from "./SizeUtil";
 import {
     OZRefreshFlatList,
     FlatListState,
     SizeUtil,
 } from 'react-native-oz-libs';
 
-const defaultPage = 1;
-
-class App extends Component {
+class App extends Component<Props> {
     constructor(props) {
         super(props);
         this.state = {
@@ -117,6 +114,7 @@ const AppStack = createStackNavigator({
 });
 export default AppStack;
 
+const defaultPage = 1;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -125,4 +123,3 @@ const styles = StyleSheet.create({
         height: SizeUtil.screenH(false, true),
     }
 });
-
