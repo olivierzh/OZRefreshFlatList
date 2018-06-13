@@ -19,6 +19,7 @@ import {
     FlatListState,
     SizeUtil,
 } from 'react-native-oz-libs';
+import codePush from "react-native-code-push";
 
 class App extends Component<Props> {
     constructor(props) {
@@ -108,6 +109,8 @@ class App extends Component<Props> {
         }
     }
 }
+
+App = codePush(App);
 
 const AppStack = createStackNavigator({
     App: {screen: App},

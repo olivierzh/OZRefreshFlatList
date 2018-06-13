@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">Vq6Q71e_7VWXHwloAzPUC34wTnAHryTIweaxm</string>
     <string name="app_name">OZRefreshFlatList</string>
 </resources>
